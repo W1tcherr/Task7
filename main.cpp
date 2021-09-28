@@ -1,35 +1,30 @@
 #include <iostream>
 #include <time.h>
-int main()
-{
-    const int number = 1000000;
-    int* arr = new int[number + 1];
+
+int main() {
+    const unsigned number = 1000000;
+    unsigned count = 1;
+    unsigned *arr = new unsigned[number + 1]{};
 
     double start = clock() * 1.0 / CLOCKS_PER_SEC;
 
-    for(int i=0;i<=number;++i)
+    for (unsigned i = 1; i <= (number / 2); ++i)
     {
-        arr[i] = 0;
+        for (unsigned j = i + i; j <= number; j += i)
+            arr[j] += i;
     }
 
-    int m = number/2;
-    for(int i=1;i<=m;++i)
+    for (unsigned i = 220; i <= number; ++i)
     {
-
-        for(int j=i+i;j<=number;j+=i)
-            arr[j]+=i;
-    }
-    for(int i=1;i<=number;++i)
-    {
-        if(arr[i] <= number && arr[i] != i && arr[arr[i]] == i)
+        if (arr[i] <= number && arr[i] != i && arr[arr[i]] == i)
         {
-            std::cout << i <<"\t  "<< arr[i] <<std::endl;
+            std::cout << count << ":\t" << i << "\t  " << arr[i] << std::endl;
             arr[i] = 0;
+            ++count;
         }
 
     }
-
-    delete []arr;
+    delete[]arr;
 
     double end = clock() * 1.0 / CLOCKS_PER_SEC;
     std::cout << end - start << "sec" << std::endl;
